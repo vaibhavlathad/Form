@@ -1,0 +1,1464 @@
+{% extends 'base.html' %} {% block 'body' %}
+
+<link href=https://fonts.googleapis.com/icon?family=Material+Icons rel="stylesheet" />
+
+<script src=http://code.jquery.com/jquery-3.3.1.min.js></script>
+
+<link href=https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css rel="stylesheet"
+
+    type="text/css" />
+
+<link href=https://nightly.datatables.net/css/dataTables.bootstrap4.css rel="stylesheet" type="text/css" />
+
+<script src=https://nightly.datatables.net/js/jquery.dataTables.js></script>
+
+<script src=https://nightly.datatables.net/js/dataTables.bootstrap4.js></script>
+
+<!-- jQuery -->
+
+<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js></script>
+
+<!-- Bootstrap JS -->
+
+<script src=https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js></script>
+
+<!-- Bootstrap DateTimePicker JS -->
+
+<script src=https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js></script>
+
+<script
+
+    src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js></script>
+ 
+<div class="card">
+
+    <table id="main-table" class="table table-hover table-bordered scrolldown" width="100%" style="white-space: nowrap">
+
+        <!DOCTYPE html>
+
+        <html lang="en">
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <!-- Bootstrap CSS -->
+
+            <link rel="stylesheet" href=https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css>
+
+            <!-- Bootstrap DateTimePicker CSS -->
+
+            <link rel="stylesheet"
+
+                href=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css>
+
+             <title>Create Change</title>
+
+            <style>
+
+                body {
+
+                    font-family: Arial, sans-serif;
+
+                    background-color: #f4f4f4;
+
+                    margin: 0;
+
+                    padding: 0;
+
+                }
+
+                .container {
+
+                    max-width: 800px;
+
+                    margin: 20px auto;
+
+                    padding: 20px;
+
+                    background-color: #fff;
+
+                    border-radius: 8px;
+
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+                }
+
+                 .section {
+
+                    margin-bottom: 20px;
+
+                }
+
+                .section h2 {
+
+                    color: #333;
+
+                    margin-top: 0;
+
+                    text-align: center;
+
+                }
+
+                .section p {
+
+                    color: #666;
+
+                    text-align: center;
+
+                }
+
+                .form-group {
+
+                    margin-bottom: 15px;
+
+                    display: flex;
+
+                    align-items: center;
+              }
+
+                .form-group label {
+
+                    font-weight: bold;
+
+                    flex: 1;
+
+                    margin-right: 10px;
+                }
+
+                .form-group input[type="text"],
+
+                .form-group input[type="number"],
+
+                .form-group input[type="file"],
+
+                .form-group textarea,
+
+                .form-group input[type="datetime-local"] {
+
+                    flex: 2;
+
+                    padding: 8px;
+
+                    border: 1px solid #ccc;
+
+                    border-radius: 4px;
+
+                    box-sizing: border-box;
+
+                    width: 100%;
+
+                }
+                .form-group input[type="file"] {
+
+                    border: none;
+
+                }
+                .form-group textarea {
+
+                    height: 100px;
+
+                }
+
+                .form-group input[type="submit"] {
+
+                    background-color: #4CAF50;
+
+                    color: white;
+
+                    padding: 12px 20px;
+
+                    border: none;
+
+                    border-radius: 4px;
+
+                    cursor: pointer;
+
+                    font-size: 16px;
+
+                    flex: 1;
+
+                }
+                .form-group input[type="submit"]:hover {
+
+                    background-color: #45a049;
+
+                }
+
+            </style>
+
+        </head> 
+
+        <body>
+
+             <div class="container-fluid col-8" id="createCR">
+
+                <div class="section">
+
+                    <h2>Create Change Request</h2>
+
+                    <p>Please select record to create change request</p>
+
+                </div>
+
+                 <!-- Search Filter -->
+
+                <table class="table col-11 m-auto table-borderless">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+
+                                        <span class="input-group-text">PACKAGE ID</span>
+
+                                    </div>
+
+                                    <input type="text" class="form-control" id="package_id">
+
+                                </div>
+
+                            </th>
+
+ 
+
+                            <th>
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+
+                                        <label class="input-group-text" for="duco_instance_selection">Instance</label>
+
+                                    </div>
+
+                                    <select class="custom-select" id="duco_instance_selection">
+
+                                        <option selected value="">Choose Instance...</option>
+
+                                    </select>
+
+                                </div>
+
+                            </th>
+
+                            <th>
+
+                                <div class="input-group">
+
+                                   <div class="input-group-prepend">
+
+                                        <span class="input-group-text">JIAR Number</span>
+
+                                    </div>
+
+                                    <input type="text" class="form-control" id="jira_number">
+
+                                </div>
+
+                            </th>
+
+                             <th>
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+
+                                        <span class="input-group-text">CR Number</span>
+
+                                    </div>
+
+                                    <input type="text" class="form-control" id="cr_number">
+
+                                </div>
+
+                            </th>
+
+                             <th>
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+
+                                        <span class="input-group-text">Summary</span>
+
+                                    </div>
+
+                                    <input type="text" class="form-control" id="cr_summary">
+
+                                </div>
+
+                            </th>
+
+                             <th>
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+
+                                        <label class="input-group-text" for="status_selection">Status</label>
+
+                                    </div>
+
+                                    <select class="custom-select" id="status_selection">
+
+                                        <option selected value="">Choose Status...</option>
+
+                                    </select>
+
+                                </div>
+
+                            </th>
+
+                             <th>
+
+                                <button type="button" class="btn btn-primary" id="search_btn">Search</button>
+
+                                <button type="button" class="btn btn-secondary" id="reset_btn">Reset</button>
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                </table>
+
+                 <div class="section"></div>
+
+                 <!-- Data table -->
+
+                <table class="table col-11 m-auto" id="code_promotion_data">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>UAT Package ID</th>
+
+                            <th>DUCO Instance</th>
+
+                            <th>Jira Number</th>
+
+                            <th>Summary/Justification</th>
+
+                            <th>Start Date</th>
+
+                            <th>End Date</th>
+
+                            <th>CR Number</th>
+
+                            <th>Status</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for detail in codePromotionList %}
+
+                        <tr>
+
+                            <td class="package_id_cls" code-promotion-id="{{ detail.id }}">{{ detail.PACKAGE_ID }}</td>
+
+                            <td>{{ detail.DUCO_INSTANCE }}</td>
+
+                            <td class="jira_number_cls">{{ detail.JIRA }}</td>
+
+                            <td>{{ detail.SUMMARY }}</td>
+
+                            <td>{{ detail.START_TIME }}</td>
+
+                            <td>{{ detail.END_TIME }}</td>
+
+                            <td id="data_cr_{{ detail.id }}">{{ detail.CR_NUMBER }}</td>
+
+                            <td>{{ detail.STATUS_DESCRIPTION }}</td>
+
+                            <td>
+
+                                <p id="action_btn_group_{{ detail.id }}">
+
+                                    <button id="data_create_btn_{{ detail.id }}" type="button"
+
+                                        class="btn btn-primary btn_create_cr" data-toggle="modal"
+
+                                        data-target="#create_cr_window">Create</button>
+
+                                    <button type="button" class="btn btn-secondary">Detail</button>
+
+                                    <button type="button" class="btn btn-danger">Cancel</button>
+
+                                </p>
+
+                                 <p id="action_btn_group_text_{{ detail.id }}" style="display:none">NA</p>
+
+                                 <!-- Load animation -->
+
+                                <div id="action_btn_group_load_{{ detail.id }}" class="progress" style="display:none">
+
+                                    <div id="action_btn_group_progress_{{ detail.id }}"
+
+                                        class="progress-bar progress-bar-striped progress-bar-animated"
+
+                                        role="progressbar" aria-valuenow="20" style="width: 20%" aria-valuemin="0"
+
+                                        aria-valuemax="100"></div>
+
+                                </div>
+
+                           </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+                 <div class="section"></div>
+
+                <!-- pagination -->
+
+                <nav aria-label="Create change Page navigation">
+
+                    <ul class="pagination justify-content-center">
+
+                        <li class="page-item disabled">
+
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+
+                        </li>
+
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                        <li class="page-item">
+
+                            <a class="page-link" href="#">Next</a>
+
+                        </li>
+
+                    </ul>
+
+                </nav>
+
+                <!-- Create CR popup window -->
+
+                <div class="modal fade" id="create_cr_window">
+
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+
+ 
+                        <!-- header -->
+
+                            <div class="modal-header">
+
+                                <h4 class="modal-title">Confirmation</h4>
+
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+
+                            <!-- body -->
+
+                            <div class="modal-body">
+
+                                <p>Please confirm below information to create CR</p>
+
+                                <form>
+
+                                    <div class="form-group">
+
+                                        <label for="modal_uat_package_id">UAT Package Id</label>
+
+                                        <input type="text" class="form-control no-border" id="modal_uat_package_id"
+
+                                            readonly>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label for="modal_jira_number">Jira Number</label>
+
+                                        <input type="text" class="form-control no-border" id="modal_jira_number"
+
+                                            readonly>
+
+                                    </div>
+
+                                    <div class="form-group" hidden="hidden">
+
+                                        <label for="UUID">UUID</label>
+
+                                        <input type="text" class="form-control no-border" id="modal_uuid" readonly>
+
+                                    </div>
+
+ 
+
+                                </form>
+
+                            </div>
+
+ 
+
+                            <!-- footer -->
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-primary mr-auto"
+
+                                    onclick="sendChangRequest()">Process</button>
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+ 
+
+            <script>
+
+ 
+
+                // Get token
+
+                function getCookie(name) {
+
+                    var cookieValue = null;
+
+                    if (document.cookie && document.cookie !== '') {
+
+                        var cookies = document.cookie.split(';');
+
+                        for (var i = 0; i < cookies.length; i++) {
+
+                            var cookie = cookies[i].trim();
+
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
+                                break;
+
+                            }
+
+                        }
+
+                    }
+
+                    return cookieValue;
+
+                }
+
+ 
+
+                // Judge whether value is empty or null
+
+                // Return true means value not null
+
+                function isNullAndUndef(value) {
+
+                    return (value !== null && value !== undefined);
+
+                }
+
+ 
+
+                // Set hover text message
+
+                function setHoverText(msg, id) {
+
+                    var statusTextClassName = "action_btn_group_text_" + id;
+
+                    $('#' + statusTextClassName).text(msg);
+
+                }
+
+ 
+
+                // Move progress bar
+
+                function moveProgressBar(percentage, id) {
+
+                    var statusLoadProgressClassName = "action_btn_group_progress_" + id;
+
+                    var dataAttr = "aria-valuenow";
+
+                    var dataAttrVal = percentage;
+
+                    var dataCss = "width";
+
+                    var dataCssVal = percentage + "%";
+
+                    $('#' + statusLoadProgressClassName).attr(dataAttr, dataAttrVal);
+
+                    $('#' + statusLoadProgressClassName).css(dataCss, dataCssVal);
+
+                }
+
+ 
+
+                // Hide progress bar and show button group
+
+                function barHideAndBtnShow(id) {
+
+                    var actionBtnClassName = "action_btn_group_" + id;
+
+                    var statusTextClassName = "action_btn_group_text_" + id;
+
+                    var statusLoadClassName = "action_btn_group_load_" + id;
+
+ 
+
+                    $('#' + actionBtnClassName).fadeIn();
+
+                    $('#' + statusTextClassName).hide();
+
+                    $('#' + statusLoadClassName).hide();
+
+                }
+
+ 
+
+                // Show progress bar and hide button group
+
+                function barShowAndBtnHide(id) {
+
+                    var actionBtnClassName = "action_btn_group_" + id;
+
+                    var statusTextClassName = "action_btn_group_text_" + id;
+
+                    var statusLoadClassName = "action_btn_group_load_" + id;
+
+ 
+
+                    $('#' + actionBtnClassName).hide();
+
+                    $('#' + statusTextClassName).fadeIn();
+
+                    $('#' + statusLoadClassName).fadeIn();
+
+                }
+
+ 
+
+                // Reload code promotion list table
+
+                function reLoadTable(requestList) {
+
+                    // Render code promotion list after data refresh
+
+                    newHtml = '<table class="table col-8 m-auto" id="code_promotion_data">'
+
+                    newHtml += '    <thead>'
+
+                    newHtml += '        <tr>'
+
+                    newHtml += '            <th>UAT Package ID</th>'
+
+                    newHtml += '            <th>DUCO Instance</th>'
+
+                    newHtml += '            <th>Jira Number</th>'
+
+                    newHtml += '            <th>Summary/Justification</th>'
+
+                    newHtml += '            <th>Start Date</th>'
+
+                    newHtml += '            <th>End Date</th>'
+
+                    newHtml += '            <th>CR Number</th>'
+
+                    newHtml += '            <th>Status</th>'
+
+                    newHtml += '            <th>Actions</th>'
+
+                    newHtml += '        </tr>'
+
+                    newHtml += '    </thead>'
+
+                    newHtml += '    <tbody>'
+
+ 
+
+                    // Dynamic data start
+
+                    $.each(requestList, function (index, detail) {
+
+ 
+
+                        newHtml += '<tr>'
+
+                        newHtml += '<td class="package_id_cls" code-promotion-id="' + detail.id + '">' + detail.PACKAGE_ID + '</td>'
+
+                        newHtml += '<td>' + detail.DUCO_INSTANCE + '</td>'
+
+                        newHtml += '<td class="jira_number_cls">' + detail.JIRA + '</td>'
+
+                        newHtml += '<td>' + detail.SUMMARY + '</td>'
+
+                        newHtml += '<td>' + detail.START_TIME + '</td>'
+
+                        newHtml += '<td>' + detail.END_TIME + '</td>'
+
+                        newHtml += '<td id="data_cr_' + detail.id + '">' + detail.CR_NUMBER + '</td>'
+
+                        newHtml += '<td>' + detail.STATUS_DESCRIPTION + '</td>'
+
+                        newHtml += '<td><p id="action_btn_group_' + detail.id + '"><button id="data_create_btn_' + detail.id + '" type="button" class="btn btn-primary btn_create_cr" data-toggle="modal" data-target="#create_cr_window">Create</button> '
+
+                        newHtml += '<button type="button" class="btn btn-secondary">Detail</button> '
+
+                        newHtml += '<button type="button" class="btn btn-danger">Cancel</button></p>'
+
+                        newHtml += '<p id="action_btn_group_text_' + detail.id + '" style="display:none">NA</p>'
+
+                        newHtml += '<div id="action_btn_group_load_' + detail.id + '" class="progress" style="display:none">'
+
+                        newHtml += '<div id="action_btn_group_progress_' + detail.id + '" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="20" style="width: 20%" aria-valuemin="0" aria-valuemax="100"></div></div>'
+
+                        newHtml += '</td>'
+
+                        newHtml += '</tr>'
+
+ 
+
+                    });
+
+                    // Dynamic data end
+
+ 
+
+                    newHtml += '    </tbody>'
+
+                    newHtml += '</table>'
+
+ 
+
+                    // Bind new html & data
+
+                    $('#code_promotion_data').html(newHtml);
+
+ 
+
+                    // Bind create cr action to button after html refresh
+
+                    createCRAction();
+
+                }
+
+ 
+
+                // Search code promotion list from DB
+
+                function searchCodePromotionList() {
+
+ 
+
+                    var packageId = $('#package_id').val();
+
+                    var jiraNumber = $('#jira_number').val();
+
+                    var crNumber = $('#cr_number').val();
+
+                    var ducoInstance = $('#duco_instance_selection').val();
+
+                    var crSummary = $('#cr_summary').val();
+
+                    var statusCode = $('#status_selection').val();
+
+ 
+
+                    data = JSON.stringify({
+
+                        'packageId': packageId,
+
+                        'jiraNumber': jiraNumber,
+
+                        'crNumber': crNumber,
+
+                        'ducoInstance': ducoInstance,
+
+                        'crSummary': crSummary,
+
+                        'statusCode': statusCode,
+
+                    });
+
+ 
+
+                    // Token is required otherwise it will fail on POST request.
+
+                    const csrftoken = getCookie('csrftoken');
+
+ 
+
+                    requestUrl = 'create_cr/search_code_promotion_list';
+
+ 
+
+                    fetch(requestUrl, {
+
+                        method: 'POST',
+
+                        credentials: 'same-origin',
+
+                        body: data,
+
+                        headers: {
+
+                            'Content-Type': 'application/json',
+
+                            'X-Requested-With': 'XMLHttpRequest',
+
+                            "X-CSRFToken": csrftoken
+
+                        },
+
+                    })
+
+                        .then(response => response.json())
+
+                        .then(data => {
+
+                            if (data.status == 200) {
+
+                                var requestList = data.dataList;
+
+ 
+
+                                // Reload data
+
+                                reLoadTable(requestList);
+
+                            }
+
+                            else {
+
+                                alert('Error: Fail to search data, please contact administrator !!!');
+
+                                return;
+
+                            }
+
+                        })
+
+                        .catch(error => {
+
+                            console.log(error);
+
+                        });
+
+                }
+
+ 
+
+                // Create new CR
+
+                function submitSnowRequest(id) {
+
+                    const csrftoken = getCookie('csrftoken');
+
+ 
+
+                    var requestUrl = 'create_cr/submit_snow_request/' + id;
+
+                    var crNumber = null;
+
+ 
+
+                    // Use ajax to make sure async disabled
+
+                    // So that cr number can be provided instead of returning null
+
+                    $.ajax({
+
+                        url: requestUrl,
+
+                        type: 'POST',
+
+                        async: false,
+
+                        data: {
+
+                            'csrfmiddlewaretoken': csrftoken
+
+                        },
+
+                        header: {
+
+                            'Content-Type': 'application/json',
+
+                            'X-Requested-With': 'XMLHttpRequest',
+
+                        },
+
+                        success: function (data) {
+
+                            if (data.status == 200) {
+
+ 
+
+                                crNumber = data.cr_number;
+
+                                console.log(data);
+
+ 
+
+                                // Show loading animation & hide button group
+
+                                barShowAndBtnHide(id);
+
+ 
+
+                                setHoverText(data.message, id);
+
+ 
+
+                                // Next Step: Add Change task
+
+                                addChangeTask(crNumber, id);
+
+                            }
+
+                            else {
+
+                                setHoverText(data.message, id);
+
+                                return;
+
+                            }
+
+                        },
+
+                        error: function (error) {
+
+                            console.log(error);
+
+                        }
+
+                    });
+
+ 
+
+                    return crNumber;
+
+                }
+
+ 
+
+                // Add change task
+
+                function addChangeTask(cr, id) {
+
+                    const csrftoken = getCookie('csrftoken');
+
+ 
+
+                    var requestUrl = 'create_cr/add_change_task/' + id + '/' + cr;
+
+                    var currPercentage = 40;
+
+ 
+
+                    $.ajax({
+
+                        url: requestUrl,
+
+                        type: 'POST',
+
+                        data: {
+
+                            'csrfmiddlewaretoken': csrftoken
+
+                        },
+
+                        header: {
+
+                            'Content-Type': 'application/json',
+
+                            'X-Requested-With': 'XMLHttpRequest',
+
+                        },
+
+                        success: function (data) {
+
+                            if (data.status == 200) {
+
+ 
+
+                                moveProgressBar(currPercentage, id);
+
+                                setHoverText(data.message, id);
+
+ 
+
+                                // Next Step: Upload attachment
+
+                                uploadAttachment(cr, id);
+
+                            }
+
+                            else {
+
+                                setHoverText(data.message, id);
+
+                                return;
+
+                            }
+
+                        },
+
+                        error: function (error) {
+
+                            console.log(error);
+
+                        }
+
+                   });
+
+                }
+
+ 
+
+                // Upload attachment to CR
+
+                function uploadAttachment(cr, id) {
+
+ 
+
+                    var currPercentage = 60;
+
+ 
+
+                    moveProgressBar(currPercentage, id);
+
+ 
+
+                    var msg = cr + " upload attachment.";
+
+                    setHoverText(msg, id);
+
+ 
+
+                    // Next Step: Move CR to Assess
+
+                    moveToAssess(cr, id);
+
+                }
+
+ 
+
+                // Move CR to Assess
+
+                function moveToAssess(cr, id) {
+
+ 
+
+                    const csrftoken = getCookie('csrftoken');
+
+ 
+
+                    var requestUrl = 'create_cr/move_cr_to_access/' + id + '/' + cr;
+
+                    var currPercentage = 80;
+
+ 
+
+                    $.ajax({
+
+                        url: requestUrl,
+
+                        type: 'POST',
+
+                        data: {
+
+                            'csrfmiddlewaretoken': csrftoken
+
+                        },
+
+                        header: {
+
+                            'Content-Type': 'application/json',
+
+                            'X-Requested-With': 'XMLHttpRequest',
+
+                        },
+
+                        success: function (data) {
+
+                            if (data.status == 200) {
+
+ 
+
+                                moveProgressBar(currPercentage, id);
+
+                                setHoverText(data.message, id);
+
+ 
+
+                                var crText = 'data_cr_' + id;
+
+                                $('#' + crText).text(data.cr_number);
+
+ 
+
+                                // Next Step: Schedule Ansible
+
+                                scheduleAnsibleJob(cr, id);
+
+                            }
+
+                            else {
+
+                                setHoverText(data.message, id);
+
+                                return;
+
+                            }
+
+                        },
+
+                        error: function (error) {
+
+                            console.log(error);
+
+                        }
+
+                    });
+
+                }
+
+ 
+
+                // Upload attachment to CR
+
+                function scheduleAnsibleJob(cr, id) {
+
+ 
+
+                    var currPercentage = 90;
+
+ 
+
+                    moveProgressBar(currPercentage, id);
+
+ 
+
+                    var msg = "Scheduling ansible job";
+
+                    setHoverText(msg, id);
+
+ 
+
+                    // Set all step done
+
+                    setAllDone(id);
+
+                }
+
+ 
+
+                // Set all step as done
+
+                function setAllDone(id) {
+
+ 
+
+                    var currPercentage = 100;
+
+                    moveProgressBar(currPercentage, id);
+
+ 
+
+                    var msg = "Almost done";
+
+                    setHoverText(msg, id);
+
+ 
+
+                    // Hide progress and show button group
+
+                    window.setTimeout(barHideAndBtnShow(id), 20000);
+
+ 
+
+                    // TODO disable "Create" button
+
+                }
+
+ 
+
+                // Send request to create CR & ansible job
+
+                // Step 1 TODO: CR validation - CR schedule time must larger than sysdate to avoid Retro CR
+
+                // Step 2 submitSnowRequest: Call SNOW API to create CR(Copy from existing template)
+
+                // Step 3 addChangeTask: Add Implement task
+
+                // Step 4 uploadAttachment: Upload attachment
+
+                // Step 5 moveToAssess: Move CR to Assess
+
+                // Step 6 scheduleAnsibleJob: Schedule Ansible job - Execute template in non-prod ansible and pass the package id to CR
+
+                function sendChangRequest() {
+
+                    var code_promition_id = $('#modal_uuid').val();
+
+ 
+
+                    // code_promition_id can not be null
+
+                    if (isNullAndUndef(code_promition_id)) {
+
+ 
+
+                        // Close modal
+
+                        $('#create_cr_window .close').click();
+
+ 
+
+                        var crNumber = null;
+
+ 
+
+                        // There is function call chain, if return code is 200 then go to next function
+
+                        // submitSnowRequest -> addChangeTask -> uploadAttachment -> moveToAssess -> scheduleAnsibleJob
+
+                        // The first step: Create new CR
+
+                        crNumber = submitSnowRequest(code_promition_id);
+
+ 
+
+                    }
+
+                    else {
+
+                        alert('Validation fail: Code promotion UUID is null !!!');
+
+                        return;
+
+                    }
+
+                }
+
+ 
+
+                // Bind Submit CR and schedule Ansible job
+
+                function createCRAction() {
+
+                    $('.btn_create_cr').click(function () {
+
+                        // find the closest tr element to the button that was clicked
+
+                        var currentRow = $(this).closest('tr');
+
+ 
+
+                        // package id & jira number
+
+                        var packageId = currentRow.find('.package_id_cls').text();
+
+                        var jiraNumber = currentRow.find('.jira_number_cls').text();
+
+                        var UUID = currentRow.find('.package_id_cls').attr('code-promotion-id');
+
+ 
+
+                        $('#modal_uat_package_id').val(packageId);
+
+                        $('#modal_jira_number').val(jiraNumber);
+
+                        $('#modal_uuid').val(UUID);
+
+ 
+
+                    });
+
+                }
+
+ 
+
+                // Get all select options
+
+                function getSelectOptions() {
+
+                    requestUrl = "create_cr/select_options"
+
+ 
+
+                    $.ajax({
+
+                        url: requestUrl,
+
+                        type: 'GET',
+
+                        header: {
+
+                            'Content-Type': 'application/json',
+
+                            'X-Requested-With': 'XMLHttpRequest',
+
+                        },
+
+                        success: function (data) {
+
+                            if (data.status == 200) {
+
+ 
+
+                                console.log(data);
+
+                                var ducoSelectionList = data.duco_list;
+
+                                var statusSelectionList = data.status_list;
+
+ 
+
+                                // DUCO selection
+
+                                var ducoSelectionHtml = ''
+
+                                $.each(ducoSelectionList, function (index, instance) {
+
+                                    ducoSelectionHtml += '<option value="' + instance + '">' + instance + '</option>'
+
+                                });
+
+                                $('#duco_instance_selection').append(ducoSelectionHtml);
+
+ 
+
+                                // Status selection
+
+                                var statusSelectionHtml = ''
+
+                                $.each(statusSelectionList, function (index, detail) {
+
+                                    statusSelectionHtml += '<option value="' + detail + '">' + index + '</option>'
+
+                                });
+
+                                $('#status_selection').append(statusSelectionHtml);
+
+ 
+
+                            }
+
+                            else {
+
+                                alert('Fail to extract all select options !!!');
+
+                                return;
+
+                            }
+
+                        },
+
+                        error: function (request, status, error) {
+
+                            console.log(request.responseText);
+
+                        }
+
+                    });
+
+                }
+
+ 
+
+                // When page load, execute below function
+
+                $(document).ready(function () {
+
+ 
+
+                    // Bind select options
+
+                    getSelectOptions();
+
+ 
+
+                    // Search code promotion list
+
+                    $('#search_btn').click(function () {
+
+                        searchCodePromotionList();
+
+                    });
+
+ 
+
+                    // Reset search condition
+
+                    $('#reset_btn').click(function () {
+
+                        $('#package_id').val('');
+
+                        $('#jira_number').val('');
+
+                        $('#cr_number').val('');
+
+                        $('#cr_summary').val('');
+
+                       
+
+                        $('#cr_status').val('');
+
+                        $('#duco_instance').val('');
+
+                    });
+
+ 
+
+                    // Bind create cr actio to button
+
+                    createCRAction(); 
+
+                });
+
+            </script>
+
+        </body>
+
+        </html>
+
+</div>
+
+ 
+
+{% endblock %}
+
+ 
